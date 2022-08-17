@@ -66,4 +66,7 @@
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="HolidayChatAgent.Database.publish.xml" />
+  </ItemGroup>
 </Project>
