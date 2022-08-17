@@ -18,6 +18,11 @@ public class HolidayRepository : IHolidayRepository
     {
         using var connection = _connectionFactory.Create();
 
+        //if(connection.State == ConnectionState.Closed)
+        //{
+            
+        //}
+
         var results = await connection.QueryAsync<Holiday>(
             "dbo.spHolidaysGetAll", commandType: CommandType.StoredProcedure);
 
