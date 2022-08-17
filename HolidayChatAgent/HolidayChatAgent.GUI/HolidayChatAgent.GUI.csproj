@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HolidayChatAgent.Repository\HolidayChatAgent.Repository.csproj" />
+    <ProjectReference Include="..\HolidayChatAgent.Services\HolidayChatAgent.Services.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,15 @@
+using HolidayChatAgent.Repository;
+using HolidayChatAgent.Repository.Data.Connection;
+using HolidayChatAgent.Services.Concrete;
+using HolidayChatAgent.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
+builder.Services.AddSingleton<IHolidayRepository, HolidayRepository>();
+builder.Services.AddSingleton<IHolidayService, HolidayService>();
 
 var app = builder.Build();
 
