@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace HolidayChatAgent.Repository.Data.Connection
 {
-    public class DbConnectionFactory
+    public class DbConnectionFactory : IDbConnectionFactory
     {
         private readonly IConfiguration _config;
 
