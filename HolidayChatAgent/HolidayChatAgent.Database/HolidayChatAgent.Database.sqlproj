@@ -62,6 +62,7 @@
   <ItemGroup>
     <Build Include="Tables\Holidays.sql" />
     <Build Include="StoredProcedures\spHolidays_Insert.sql" />
+    <Build Include="StoredProcedures\spHolidays_GetAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
