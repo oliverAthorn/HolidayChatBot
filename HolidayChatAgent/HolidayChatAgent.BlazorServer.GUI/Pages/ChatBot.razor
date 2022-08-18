@@ -12,9 +12,18 @@
 
 <EditForm Model="@preferences" OnValidSubmit="@SavePreferences">
 
-    <InputText id="Category" @bind-Value="preferences.Category"/>
-    <InputText id="PricePerNight" @bind-Value="preferences.PricePerNight"/>
-
+    @if(QuestionTracker == 0)
+    {
+      <p>Welcome to Chat Bot! First of all, do you like a hot or cold holiday?</p>
+      <InputText id="Category" @bind-Value="preferences.Category"/>  
+    }
+    
+     @if(QuestionTracker == 1)
+    {
+      <p>Thank you! Next, can you tell me what your preffered price per night is?</p>
+      <InputText id="PricePerNight" @bind-Value="preferences.PricePerNight"/>
+    }
+    
     <button type="submit" class="btn btn-primary">Submit</button>
 
 </EditForm>
