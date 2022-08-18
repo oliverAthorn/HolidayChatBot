@@ -1,0 +1,57 @@
+﻿@page "/Chatter"
+
+@using HolidayChatAgent.Repository
+@using HolidayChatAgent.Repository.Models
+@using HolidayChatAgent.Services
+@using HolidayChatAgent.Services.Interfaces
+@using HolidayChatAgent.Repository.Data.Connection
+
+@inject IHolidayService _service
+
+
+<h1>HolidayChatAgent</h1>
+
+<h4>Holidays</h4>
+
+@if (holidays is null)
+{
+    <><em>Loading...</em></>
+}
+else
+{
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>HolidayReference </th>
+            <th>HotelName        </th>
+            <th>City             </th>
+            <th>Continent        </th>
+            <th>Country          </th>
+            <th>Category         </th>
+            <th>StarRating       </th>
+            <th>TempRating       </th>
+            <th>Location         </th>
+            <th>PricePerNight    </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var holiday in holidays)
+        {
+            <tr>
+                <td>@holiday.HolidayReference</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@code {
+    private IEnumerable<Holiday> holidays;
+
+    protected override async Task OnInitializedAsync()
+    {
+        {
+            holidays = await _service.GetAllHolidaysAsync();
+        }
+    }
+}

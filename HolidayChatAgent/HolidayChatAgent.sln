@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolidayChatAgent.Tests", "H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolidayChatAgent.Services", "HolidayChatAgent.Services\HolidayChatAgent.Services.csproj", "{0430F672-C209-4DF1-8E17-22B7249905A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolidayChatAgent.BlazorServer.GUI", "HolidayChatAgent.BlazorServer.GUI\HolidayChatAgent.BlazorServer.GUI.csproj", "{271053EB-75E3-4FE0-8E9B-4531F1033A26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolidayChatAgent.BlazorServer.GUI", "HolidayChatAgent.BlazorServer.GUI\HolidayChatAgent.BlazorServer.GUI.csproj", "{271053EB-75E3-4FE0-8E9B-4531F1033A26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

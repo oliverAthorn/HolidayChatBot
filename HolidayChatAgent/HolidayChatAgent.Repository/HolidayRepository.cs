@@ -24,7 +24,7 @@ public class HolidayRepository : IHolidayRepository
         //}
 
         var results = await connection.QueryAsync<Holiday>(
-            "dbo.spHolidaysGetAll", commandType: CommandType.StoredProcedure);
+            "[dbo].spHolidays_GetAll", commandType: CommandType.StoredProcedure);
 
         return results;
     }
