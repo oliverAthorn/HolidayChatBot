@@ -65,6 +65,7 @@ else
     private PreferenceCalculator preferenceCalculator = new PreferenceCalculator();
     private List<Holiday> holidays;
     private UserPreferences preferences = new UserPreferences();
+    private int QuestionTracker = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -75,6 +76,8 @@ else
 
     private void SavePreferences()
     {
+        QuestionTracker++;
+
         preferenceCalculator.Category = preferences.Category;
         preferenceCalculator.PricePerNight = preferences.PricePerNight;
 
@@ -82,17 +85,6 @@ else
         {
             holidays.RemoveAll(x => x.TempRating == "cold");
 
-        }
-    }
-
-    private void SwitchStatement()
-    {
-        var category = preferenceCalculator.Category;
-        var price = preferenceCalculator.PricePerNight;
-
-        if(category == "hot")
-        {
-            holidays.ToList().RemoveAll(x => x.TempRating == "cold");
         }
     }
 }
