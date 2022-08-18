@@ -1,0 +1,98 @@
+﻿@page "/ChatBot"
+
+@using HolidayChatAgent.Services
+@using HolidayChatAgent.Services.Interfaces
+@using HolidayChatAgent.Repository
+@using HolidayChatAgent.Repository.Models
+@using HolidayChatAgent.Repository.Data.Connection
+
+@inject IHolidayService _service
+
+<h1>Holiday Chat Agent</h1>
+
+<EditForm Model="@preferences" OnValidSubmit="@SavePreferences">
+
+    <InputText id="Category" @bind-Value="preferences.Category"/>
+    <InputText id="PricePerNight" @bind-Value="preferences.PricePerNight"/>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</EditForm>
+
+
+@if (holidays is null)
+{
+        <><em>Loading...</em></>
+}
+else
+{
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>HolidayReference </th>
+            <th>HotelName        </th>
+            <th>City             </th>
+            <th>Continent        </th>
+            <th>Country          </th>
+            <th>Category         </th>
+            <th>StarRating       </th>
+            <th>TempRating       </th>
+            <th>Location         </th>
+            <th>PricePerNight    </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var holiday in holidays)
+        {
+            <tr>
+                <td>@holiday.HolidayReference</td>
+                <td>@holiday.HotelName</td>
+                <td>@holiday.City</td>
+                <td>@holiday.Continent</td>
+                <td>@holiday.Country</td>
+                <td>@holiday.Category</td>
+                <td>@holiday.StarRating</td>
+                <td>@holiday.TempRating</td>
+                <td>@holiday.Location</td>
+                <td>@holiday.PricePerNight</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@code {
+    private PreferenceCalculator preferenceCalculator = new PreferenceCalculator();
+    private List<Holiday> holidays;
+    private UserPreferences preferences = new UserPreferences();
+
+    protected override async Task OnInitializedAsync()
+    {
+        {
+            holidays = await _service.GetAllHolidaysAsync();
+        }
+    }
+
+    private void SavePreferences()
+    {
+        preferenceCalculator.Category = preferences.Category;
+        preferenceCalculator.PricePerNight = preferences.PricePerNight;
+
+        if(preferenceCalculator.Category == "hot")
+        {
+            holidays.RemoveAll(x => x.TempRating == "cold");
+
+        }
+    }
+
+    private void SwitchStatement()
+    {
+        var category = preferenceCalculator.Category;
+        var price = preferenceCalculator.PricePerNight;
+
+        if(category == "hot")
+        {
+            holidays.ToList().RemoveAll(x => x.TempRating == "cold");
+        }
+    }
+}

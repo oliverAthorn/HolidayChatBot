@@ -1,4 +1,3 @@
-using HolidayChatAgent.BlazorServer.GUI.Data;
 using HolidayChatAgent.Repository;
 using HolidayChatAgent.Repository.Data.Connection;
 using HolidayChatAgent.Services.Concrete;
@@ -11,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddTransient<IHolidayRepository, HolidayRepository>();
 builder.Services.AddTransient<IHolidayService, HolidayService>();

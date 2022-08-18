@@ -13,7 +13,7 @@ public class HolidayService : IHolidayService
         _holidayRepository = holidayRepository ?? throw new ArgumentNullException(nameof(holidayRepository));
     }
 
-    public async Task<IEnumerable<Holiday>> GetAllHolidaysAsync()
+    public async Task<List<Holiday>> GetAllHolidaysAsync()
     {
         return await _holidayRepository.GetAllHolidaysAsync();
     }

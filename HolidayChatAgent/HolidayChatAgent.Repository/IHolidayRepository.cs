@@ -4,6 +4,6 @@ namespace HolidayChatAgent.Repository
 {
     public interface IHolidayRepository
     {
-        Task<IEnumerable<Holiday>> GetAllHolidaysAsync();
+        Task<List<Holiday>> GetAllHolidaysAsync();
     }
 }

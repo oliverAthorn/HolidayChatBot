@@ -14,21 +14,14 @@ public class HolidayRepository : IHolidayRepository
         _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
     }
 
-    public async Task<IEnumerable<Holiday>> GetAllHolidaysAsync()
+    public async Task<List<Holiday>> GetAllHolidaysAsync()
     {
         using var connection = _connectionFactory.Create();
-
-        //if(connection.State == ConnectionState.Closed)
-        //{
-            
-        //}
-
-
 
         var results = await connection.QueryAsync<Holiday>(
             "dbo.spHolidays_GetAll", commandType: CommandType.StoredProcedure);
 
-        return results;
+        return results.ToList();
     }
 
     //public async Task UpsertHolidaysAsync(
