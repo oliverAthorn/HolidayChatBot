@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolidayChatAgent.Repository
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolidayChatAgent.Tests", "HolidayChatAgent.Tests\HolidayChatAgent.Tests.csproj", "{47B8195C-3C8F-4AD7-98D0-C65F5C67FB3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolidayChatAgent.Services", "HolidayChatAgent.Services\HolidayChatAgent.Services.csproj", "{0430F672-C209-4DF1-8E17-22B7249905A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolidayChatAgent.Services", "HolidayChatAgent.Services\HolidayChatAgent.Services.csproj", "{0430F672-C209-4DF1-8E17-22B7249905A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolidayChatAgent.BlazorServer.GUI", "HolidayChatAgent.BlazorServer.GUI\HolidayChatAgent.BlazorServer.GUI.csproj", "{271053EB-75E3-4FE0-8E9B-4531F1033A26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{0430F672-C209-4DF1-8E17-22B7249905A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0430F672-C209-4DF1-8E17-22B7249905A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0430F672-C209-4DF1-8E17-22B7249905A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{271053EB-75E3-4FE0-8E9B-4531F1033A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{271053EB-75E3-4FE0-8E9B-4531F1033A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{271053EB-75E3-4FE0-8E9B-4531F1033A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{271053EB-75E3-4FE0-8E9B-4531F1033A26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
