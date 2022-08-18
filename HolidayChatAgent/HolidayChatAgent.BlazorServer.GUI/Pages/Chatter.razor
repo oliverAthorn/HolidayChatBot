@@ -7,15 +7,41 @@
 @using HolidayChatAgent.Repository.Data.Connection
 
 @inject IHolidayService _service
+@inject IHolidayRepository _repository
 
 
 <h1>HolidayChatAgent</h1>
 
 <h4>Holidays</h4>
 
+<div>
+<h4>Questions?</h4>
+
+<input type="text" @bind="@inputValue" @oninput="OnInputEvent"/>
+
+@inputValue
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Question 1 </th>
+            <th>Question 2 </th>
+        </tr>
+    </thead>
+    <tbody>
+        {
+            <tr>
+                <td>@newQuestion()</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
 @if (holidays is null)
 {
-    <><em>Loading...</em></>
+    <><em>RUN AWAY!</em></>
 }
 else
 {
@@ -54,13 +80,33 @@ else
 </table>
 }
 
-@code {
+    @code {
     private IEnumerable<Holiday> holidays;
+
+    private string inputValue = "Hello, world";
+    private void OnInputEvent(ChangeEventArgs changeEvent)
+    {
+        inputValue = (string)changeEvent.Value;
+    }
 
     protected override async Task OnInitializedAsync()
     {
         {
             holidays = await _service.GetAllHolidaysAsync();
         }
+    }
+
+    string newQuestion()
+    {
+        var question = new Questions();
+
+        return question.Question1;
+    }
+
+    string ReceiveAnswer()
+    {
+        var answer = new Answers();
+
+        return answer.Answer1;
     }
 }
