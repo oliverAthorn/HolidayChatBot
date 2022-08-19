@@ -9,88 +9,126 @@
 @inject IHolidayService _service
 
 <h1>Holiday Chat Agent</h1>
+
 <p>
 
+    <div>
+        @foreach (var chat in chatHistory)
+        {
+            <span class="text-faded">@chat</span>
+        }
+        @if (questionAndAnswerTracker == 3)
+        {
+            <table class="table table-striped">
+                
+                @foreach (var holiday in holidays)
+                {
+                    <tr>
+                    <td>@holiday.HotelName</td>
+                    <td>@holiday.City</td>
+                    <td>@holiday.Country</td>
+                    </tr>
+                }
+                
+            </table>
+        }
+    </div>
 
 </p>
-<EditForm Model="@preferences" OnValidSubmit="@SavePreferences">
-    
-    @if(QuestionTracker == 0)
-    {
-      <p>Welcome to Chat Bot! My name is Chatter, what is your name?</p>
-      <InputText id="userName" @bind-Value="@userName"/>  
-    }
-    @if(QuestionTracker == 1)
-    {
-      <p>Hello @userName, do you like a hot or cold holiday?</p>
-      <InputText id="Category" @bind-Value="preferences.Category"/>  
-    }
-    
-     @if(QuestionTracker == 2)
-    {
-      <p>Thank you! Next, can you tell me what your preffered price per night is?</p>
-      <InputText id="PricePerNight" @bind-Value="preferences.PricePerNight"/>
-    }
-    
-    <button type="submit" class="btn btn-primary">Submit</button>
 
-</EditForm>
+<div>
+    <EditForm Model="@preferences" OnValidSubmit="@ResponseValidation">
+
+        @if (questionAndAnswerTracker == 0)
+        {
+            <p>Welcome to Chat Bot! My name is Chatter, what is your name?</p>
+            <InputText id="userName" @bind-Value="@userName" />
+            <div> </div>
+            <p>@errorMessage</p>
+        }
+        @if (questionAndAnswerTracker == 1)
+        {
+
+            <p>Hello @userName, do you like a hot or cold holiday?</p>
+            <InputText id="Category" @bind-Value="preferences.Category" />
+            <div> </div>
+            <p>@errorMessage</p>
+        }
+
+        @if (questionAndAnswerTracker == 2)
+        {
+            <p>Thank you! Next, can you tell me what your preffered price per night is?</p>
+            <InputText id="PricePerNight" @bind-Value="preferences.PricePerNight" />
+            <div> </div>
+            <p>@errorMessage</p>
+        }
+
+        @if (questionAndAnswerTracker == 3)
+        {
+            <p>Based on your preferences, here is a full list of holidays we can offer you:</p>
+        }
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </EditForm>
+</div>
 
 @if (holidays is null)
 {
-        <><em>Loading...</em></>
+                <><em>Loading Holidays!</em></>
 }
 else
 {
-<p>
+    <p>
 
 
-</p>
-<p>Here is a list of holidays you might like! I'll update this list as you tell me what you like!</p>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>HolidayReference </th>
-            <th>HotelName        </th>
-            <th>City             </th>
-            <th>Continent        </th>
-            <th>Country          </th>
-            <th>Category         </th>
-            <th>StarRating       </th>
-            <th>TempRating       </th>
-            <th>Location         </th>
-            <th>PricePerNight    </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var holiday in holidays)
-        {
+    </p>
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@holiday.HolidayReference</td>
-                <td>@holiday.HotelName</td>
-                <td>@holiday.City</td>
-                <td>@holiday.Continent</td>
-                <td>@holiday.Country</td>
-                <td>@holiday.Category</td>
-                <td>@holiday.StarRating</td>
-                <td>@holiday.TempRating</td>
-                <td>@holiday.Location</td>
-                <td>@holiday.PricePerNight</td>
+                <th>HolidayReference </th>
+                <th>HotelName        </th>
+                <th>City             </th>
+                <th>Continent        </th>
+                <th>Country          </th>
+                <th>Category         </th>
+                <th>StarRating       </th>
+                <th>TempRating       </th>
+                <th>Location         </th>
+                <th>PricePerNight    </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var holiday in holidays)
+            {
+                <tr>
+                    <td>@holiday.HolidayReference</td>
+                    <td>@holiday.HotelName</td>
+                    <td>@holiday.City</td>
+                    <td>@holiday.Continent</td>
+                    <td>@holiday.Country</td>
+                    <td>@holiday.Category</td>
+                    <td>@holiday.StarRating</td>
+                    <td>@holiday.TempRating</td>
+                    <td>@holiday.Location</td>
+                    <td>@holiday.PricePerNight</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 @code {
-    private PreferenceCalculator preferenceCalculator = new PreferenceCalculator();
     private List<Holiday> holidays;
     private UserPreferences preferences = new UserPreferences();
-    private int QuestionTracker = 0;
-    private string userName = "";
+    private PreferenceCalculator preferenceCalculator = new PreferenceCalculator();
 
-    private List<string> actualResponse = new List<string>();
-    private List<string> expectedResponse = new List<string>();
+    private string userName = "";
+    private string errorMessage = "";
+
+    private int questionAndAnswerTracker = 0;
+    private int historyTracker = 0;
+    private List<string>? chatHistory = new List<string>();
 
 
     protected override async Task OnInitializedAsync()
@@ -102,20 +140,113 @@ else
 
     private void SavePreferences()
     {
-        QuestionTracker++;
+        questionAndAnswerTracker++;
 
-        preferenceCalculator.Category = preferences.Category;
-        preferenceCalculator.PricePerNight = preferences.PricePerNight;
+        var firstAnswer = preferenceCalculator.Category = preferences.Category;
+        var secondAnswer = preferenceCalculator.PricePerNight = preferences.PricePerNight;
 
-        if(preferenceCalculator.Category == "hot")
+        if (firstAnswer == "hot")
         {
             holidays.RemoveAll(x => x.TempRating == "cold");
 
+        }
+
+        if (secondAnswer != null)
+        {
+            var validateNumber = Int32.Parse(secondAnswer);
+            holidays.RemoveAll(x => x.PricePerNight > validateNumber);
+        }
+
+        if (questionAndAnswerTracker == 3)
+        {
+            UpdateChatLogs("Based on your preferences, here is a full list of holidays we can offer you:");
         }
     }
 
     private void ResponseValidation()
     {
-        //notimplemented
+
+        if (userName != "" && questionAndAnswerTracker == 0)
+        {
+            UpdateChatLogs("Welcome to Chat Bot! My name is Chatter, what is your name?");
+            UpdateChatLogs(userName);
+        }
+
+        if (questionAndAnswerTracker == 1)
+        {
+            var firstAnswer = preferenceCalculator.Category = preferences.Category;
+
+            if (firstAnswer == null)
+            {
+            }
+
+            if (userName != "" && questionAndAnswerTracker == 1)
+            {
+                UpdateChatLogs($"Hello {@userName}, do you like a hot or cold holiday?");
+                UpdateChatLogs(firstAnswer);
+            }
+
+            firstAnswer.ToLower();
+
+            var answerValidator = new List<string>();
+            answerValidator.Add("hot");
+            answerValidator.Add("cold");
+            answerValidator.Add("pass");
+
+            if (!answerValidator.Contains(firstAnswer))
+            {
+                errorMessage = "I can only understand 'hot, cold, or pass'";
+                questionAndAnswerTracker--;
+                UpdateChatLogs("I can only understand 'hot, cold, or pass'");
+            }
+            else
+            {
+                errorMessage = "";
+                SavePreferences();
+            }
+        }
+
+        if (questionAndAnswerTracker == 2)
+        {
+            int validation;
+            var secondAnswer = preferenceCalculator.PricePerNight = preferences.PricePerNight;
+
+            if (secondAnswer == null)
+            {
+            }
+
+            else
+            {
+                var validatedNumber = int.TryParse(secondAnswer, out validation);
+
+                if (validatedNumber == false)
+                {
+                    errorMessage = "I can only understand numbers";
+                    UpdateChatLogs("I can only understand numbers");
+
+                }
+                else
+                {
+                    if (userName != "" && questionAndAnswerTracker == 2)
+                    {
+                        UpdateChatLogs("Thank you! Next, can you tell me what your preffered price per night is?");
+                        UpdateChatLogs(secondAnswer);
+                    }
+                    errorMessage = "";
+                    SavePreferences();
+                }
+            }
+
+        }
+
+        else
+        {
+            SavePreferences();
+        }
+    }
+
+    private void UpdateChatLogs(string history)
+    {
+        chatHistory.Add(history);
     }
 }

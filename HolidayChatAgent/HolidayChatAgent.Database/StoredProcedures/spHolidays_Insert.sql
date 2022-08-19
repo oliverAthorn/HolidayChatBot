@@ -8,7 +8,7 @@
 	@StarRating INT NULL,
 	@TempRating VARCHAR(20),
 	@Location VARCHAR(10),
-	@PricePerNight MONEY 
+	@PricePerNight INT
 
 AS
 BEGIN

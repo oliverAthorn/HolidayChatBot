@@ -11,5 +11,5 @@ public class Holiday
     public int StarRating { get; set; }
     public string? TempRating { get; set; }
     public string? Location { get; set; }
-    public decimal PricePerNight { get; set; }
+    public int PricePerNight { get; set; }
 }
