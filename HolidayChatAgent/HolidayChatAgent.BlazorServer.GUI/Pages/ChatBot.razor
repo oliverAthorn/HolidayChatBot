@@ -11,14 +11,19 @@
 <h1>Holiday Chat Agent</h1>
 
 <EditForm Model="@preferences" OnValidSubmit="@SavePreferences">
-
+    
     @if(QuestionTracker == 0)
     {
-      <p>Welcome to Chat Bot! First of all, do you like a hot or cold holiday?</p>
+      <p>Welcome to Chat Bot! My name is Chatter, what is your name?</p>
+      <InputText id="userName" @bind-Value="@userName"/>  
+    }
+    @if(QuestionTracker == 1)
+    {
+      <p>Hello @userName, do you like a hot or cold holiday?</p>
       <InputText id="Category" @bind-Value="preferences.Category"/>  
     }
     
-     @if(QuestionTracker == 1)
+     @if(QuestionTracker == 2)
     {
       <p>Thank you! Next, can you tell me what your preffered price per night is?</p>
       <InputText id="PricePerNight" @bind-Value="preferences.PricePerNight"/>
@@ -75,6 +80,7 @@ else
     private List<Holiday> holidays;
     private UserPreferences preferences = new UserPreferences();
     private int QuestionTracker = 0;
+    private string userName = "";
 
     protected override async Task OnInitializedAsync()
     {
