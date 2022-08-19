@@ -9,7 +9,10 @@
 @inject IHolidayService _service
 
 <h1>Holiday Chat Agent</h1>
+<p>
 
+
+</p>
 <EditForm Model="@preferences" OnValidSubmit="@SavePreferences">
     
     @if(QuestionTracker == 0)
@@ -33,13 +36,17 @@
 
 </EditForm>
 
-
 @if (holidays is null)
 {
         <><em>Loading...</em></>
 }
 else
 {
+<p>
+
+
+</p>
+<p>Here is a list of holidays you might like! I'll update this list as you tell me what you like!</p>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -82,6 +89,10 @@ else
     private int QuestionTracker = 0;
     private string userName = "";
 
+    private List<string> actualResponse = new List<string>();
+    private List<string> expectedResponse = new List<string>();
+
+
     protected override async Task OnInitializedAsync()
     {
         {
@@ -101,5 +112,10 @@ else
             holidays.RemoveAll(x => x.TempRating == "cold");
 
         }
+    }
+
+    private void ResponseValidation()
+    {
+        //notimplemented
     }
 }
