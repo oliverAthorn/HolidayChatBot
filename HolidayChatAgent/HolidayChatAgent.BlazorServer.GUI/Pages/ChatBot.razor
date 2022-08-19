@@ -10,32 +10,6 @@
 
 <h1>Holiday Chat Agent</h1>
 
-<p>
-
-    <div>
-        @foreach (var chat in chatHistory)
-        {
-            <span class="text-faded">@chat</span>
-        }
-        @if (questionAndAnswerTracker == 3)
-        {
-            <table class="table table-striped">
-                
-                @foreach (var holiday in holidays)
-                {
-                    <tr>
-                    <td>@holiday.HotelName</td>
-                    <td>@holiday.City</td>
-                    <td>@holiday.Country</td>
-                    </tr>
-                }
-                
-            </table>
-        }
-    </div>
-
-</p>
-
 <div>
     <EditForm Model="@preferences" OnValidSubmit="@ResponseValidation">
 
@@ -49,7 +23,7 @@
         @if (questionAndAnswerTracker == 1)
         {
 
-            <p>Hello @userName, do you like a hot or cold holiday?</p>
+            <p>Greetings @userName! Imagine yourself on holiday - are you in a hot or cold location?</p>
             <InputText id="Category" @bind-Value="preferences.Category" />
             <div> </div>
             <p>@errorMessage</p>
@@ -57,7 +31,7 @@
 
         @if (questionAndAnswerTracker == 2)
         {
-            <p>Thank you! Next, can you tell me what your preffered price per night is?</p>
+            <p>Thank you! Next, can you tell me what your preferred price per night is?</p>
             <InputText id="PricePerNight" @bind-Value="preferences.PricePerNight" />
             <div> </div>
             <p>@errorMessage</p>
@@ -75,7 +49,7 @@
 
 @if (holidays is null)
 {
-                <><em>Loading Holidays!</em></>
+                    <><em>Loading Holidays!</em></>
 }
 else
 {
@@ -83,7 +57,7 @@ else
 
 
     </p>
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>HolidayReference </th>
@@ -118,6 +92,47 @@ else
     </table>
 }
 
+<h1>Chat History</h1>
+
+<p>
+    <div class=border style="max-height: 450px;overflow-y:scroll;">
+        @foreach (var chat in chatHistory)
+        {
+            <span class="text-muted">@chat</span>
+            <br />
+        }
+        @if (questionAndAnswerTracker == 3)
+        {
+            <br />
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>HotelName        </th>
+                        <th>City             </th>
+                        <th>Country          </th>
+                        <th>StarRating       </th>
+                        <th>TempRating       </th>
+                        <th>PricePerNight    </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var holiday in holidays)
+                    {
+                        <tr>
+                            <td>@holiday.HotelName</td>
+                            <td>@holiday.City</td>
+                            <td>@holiday.Country</td>
+                            <td>@holiday.StarRating</td>
+                            <td>@holiday.TempRating</td>
+                            <td>@holiday.PricePerNight</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</p>
+
 @code {
     private List<Holiday> holidays;
     private UserPreferences preferences = new UserPreferences();
@@ -148,7 +163,11 @@ else
         if (firstAnswer == "hot")
         {
             holidays.RemoveAll(x => x.TempRating == "cold");
+        }
 
+        if (firstAnswer == "cold")
+        {
+            holidays.RemoveAll(x => x.TempRating == "hot");
         }
 
         if (secondAnswer != null)
@@ -182,7 +201,7 @@ else
 
             if (userName != "" && questionAndAnswerTracker == 1)
             {
-                UpdateChatLogs($"Hello {@userName}, do you like a hot or cold holiday?");
+                UpdateChatLogs($"Greetings {@userName}! Imagine yourself on holiday - are you in a hot or cold location?");
                 UpdateChatLogs(firstAnswer);
             }
 

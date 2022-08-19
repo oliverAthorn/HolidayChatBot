@@ -1,14 +1,7 @@
-﻿using AutoFixture;
-using HolidayChatAgent.Repository;
-using HolidayChatAgent.Repository.Data.Connection;
-using HolidayChatAgent.Repository.Models;
+﻿using HolidayChatAgent.Repository;
 using Moq;
 using Moq.AutoMock;
-using System.Data;
 using Xunit;
-using FluentAssertions;
-using Moq.Dapper;
-using Dapper;
 using HolidayChatAgent.Services.Concrete;
 
 namespace HolidayChatAgent.Tests;
